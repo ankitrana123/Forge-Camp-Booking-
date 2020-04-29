@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\CampBooking.BusinessLayer.csproj" />
+    <ProjectReference Include="..\CampBooking\CampBooking.csproj" />
+    <ProjectReference Include="..\DataAccess\CampBooking.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>

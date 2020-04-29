@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Cors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -12,6 +13,9 @@ namespace CampBooking
             // Web API configuration and services
 
             // Web API routes
+            //var cors = new EnableCorsAttribute("*", "*", "*");//origins,headers,methods   
+            //config.EnableCors(cors);
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -19,6 +23,8 @@ namespace CampBooking
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
         }
     }
 }

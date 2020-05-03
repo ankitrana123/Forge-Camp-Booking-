@@ -13,19 +13,19 @@ namespace BusinessLayer.ServiceOperations
     {
         public bool Login(AccountModel accountModel)
         {
-            
-                User user = new User();
-                
-                user.Email =accountModel.Email;
-                user.Password = accountModel.Password;
-                user.Id = new Guid();
-                
-                AccountDataAccess accountDataAccess = new AccountDataAccess();
-                return accountDataAccess.Login(user);
-            
+
+            User user = new User();
+
+            user.Email = accountModel.Email;
+            user.Password = accountModel.Password;
+            user.Id = new Guid();
+
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+            return accountDataAccess.Login(user);
+
         }
 
-       
+
 
         public string[] GetRolesOfUser(string Email)
         {
@@ -33,6 +33,6 @@ namespace BusinessLayer.ServiceOperations
             return accountDataAccess.GetUserRoles(Email);
         }
 
-        
+
     }
 }

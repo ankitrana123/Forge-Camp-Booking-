@@ -66,31 +66,6 @@ namespace BusinessLayer.ServiceOperations
 
 
 
-        public List<CampModel> GetCamps(DateTime checkin, DateTime checkout, int capacity)
-        {
-            BookingDataAccess bookingDataAccess = new BookingDataAccess();
-
-            List<Camp> AvailableCamps = bookingDataAccess.GetCamps(checkin, checkout, capacity);
-
-            var requiredCamps = AvailableCamps.Select(camp => new CampModel()
-            {
-                Image = camp.Image,
-
-                Id = camp.Id,
-
-                IsBooked = camp.IsBooked,
-
-                Title = camp.Title,
-
-                Amount = camp.Amount,
-
-                Capacity = camp.Capacity,
-
-                Description = camp.Description,
-            }).ToList();
-
-            return requiredCamps;
-
-        }
+        
     }
 }

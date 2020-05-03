@@ -18,13 +18,13 @@ namespace CampBooking.Controllers
         //[Authorize(Roles = "User")]
         [HttpPost]
         [Route("CreateBooking")]
-        public IHttpActionResult PostCreateBooking([FromBody]BookingViewModel book)
+        public string PostCreateBooking(BookingViewModel book)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             try
             {
                 BookingOperations bookingOperations = new BookingOperations();
@@ -56,7 +56,7 @@ namespace CampBooking.Controllers
                     
                     
                 };
-                bookingOperations.CreateBooking(bookingModel);
+                return  bookingOperations.CreateBooking(bookingModel);
 
             }
             catch (Exception ex)
@@ -64,12 +64,12 @@ namespace CampBooking.Controllers
                 throw ex;
             }
 
-            return Ok(book);
+            
         }
 
         //[Authorize(Roles = "User")]
         [HttpGet]
-        [Route("GetBookingDetails")]
+        [Route("GetBookingDetails/{bookingReferenceNumber}")]
         public BookingViewModel GetBookingDetails(string bookingReferenceNumber)
         {
             try
@@ -112,7 +112,7 @@ namespace CampBooking.Controllers
 
         //[Authorize(Roles = "User")]
         [HttpDelete]
-        [Route("CancelBooking")]
+        [Route("CancelBooking/{bookingReferenceNumber}")]
         public IHttpActionResult DeleteCancelBooking(string bookingReferenceNumber)
         {
 

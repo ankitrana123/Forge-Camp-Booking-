@@ -4,12 +4,12 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="02afe4a7d35d4613b63264f07dd320b1" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="CampDBContext.Booking" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="CampDBContext.Camp" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="CampDBContext.User" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
-        <AssociationConnector Association="CampDBContext.FK_Booking_Camp" ManuallyRouted="false" />
-        <AssociationConnector Association="CampDBContext.FK_Booking_User" ManuallyRouted="false" />
+      <Diagram DiagramId="e4853a93d2f64f71854eabe74f9294f4" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="CampDbContext.Booking" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDbContext.Camp" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDbContext.User" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="CampDbContext.FK_Booking_Camp" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDbContext.FK_Booking_User" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

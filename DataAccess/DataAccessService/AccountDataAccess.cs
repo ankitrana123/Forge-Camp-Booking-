@@ -13,10 +13,7 @@ namespace DataAccess.DataAccessService
         {
             using (var context = new CampDBEntities())
             {
-                //bool IsAdminUser = false;
-                //if(context.Users.Any(user => user.Email == "ankit.rana@nagarro.co" && user.Password == "abcd")){
-                //    IsAdminUser = true;
-                //}
+                
                 bool isValidUser = context.Users.Any(User => User.Email.ToLower() ==
                 userEntity.Email.ToLower() && User.Password == userEntity.Password && User.IsAdmin);
 

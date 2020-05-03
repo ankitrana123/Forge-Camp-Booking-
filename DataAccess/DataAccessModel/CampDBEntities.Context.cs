@@ -28,5 +28,7 @@ namespace DataAccess.DataAccessModel
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<Camp> Camps { get; set; }
         public virtual DbSet<User> Users { get; set; }
+
+        
     }
 }

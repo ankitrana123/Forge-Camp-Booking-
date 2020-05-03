@@ -117,5 +117,42 @@ namespace BusinessLayer.ServiceOperations
             var isCampDeleted = campDataAcces.DeleteCamp(campId);
             return isCampDeleted;
         }
+
+        public List<CampModel> getFilteredCamps(DateTime checkInDate , DateTime checkOutDate,int capacity)
+        {
+            BookingDataAccess bookingDataServices = new BookingDataAccess();
+            CampDataAccess campDataServices = new CampDataAccess();
+            var bookedCamps = bookingDataServices.campsBetween(checkInDate, checkOutDate);
+            var nonBookedCamps = campDataServices.getFilteredCamps(bookedCamps, capacity);
+
+            return nonBookedCamps.Select(camp => DataAccessToService(camp)).ToList();
+
+
+
+
+        }
+
+        private CampModel DataAccessToService(Camp requiredCamp)
+        {
+            var campModel = new CampModel()
+            {
+
+                Image = requiredCamp.Image,
+
+                Id = requiredCamp.Id,
+
+                IsBooked = requiredCamp.IsBooked,
+
+                Title = requiredCamp.Title,
+
+                Amount = requiredCamp.Amount,
+
+                Capacity = requiredCamp.Capacity,
+
+                Description = requiredCamp.Description,
+
+            };
+            return campModel;
+        }
     }
 }

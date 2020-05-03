@@ -110,33 +110,32 @@ namespace DataAccess.DataAccessService
             }
         }
 
-        public List<Camp> GetCamps(DateTime checkin, DateTime checkout, int capacity)
+        public void removeBookingByCampId(Guid campId)
         {
-            List<Camp> availableCamps = new List<Camp>();
+            using(var context = new CampDBEntities())
+            {
+                var requiredBookings = context.Bookings.Where(bookings => bookings.CampId == campId).ToList();
+                foreach(var booking in requiredBookings)
+                {
+                    context.Bookings.Remove(booking);
+                }
+                context.SaveChanges();
+            }
+        }
+
+       
+
+        public List<Guid> campsBetween(DateTime checkIn, DateTime checkOut)
+        {
             using (var context = new CampDBEntities())
             {
-                var campIds = context.Bookings.Where(bookings => bookings.CheckInDate < checkin && bookings.CheckOutDate > checkout).Select(booking => booking.CampId);
-
-
-                var totalCamps = context.Camps.Where(c => c.Capacity == capacity).ToList();
-
-                foreach (var camp in totalCamps)
-                {
-                    bool isBooked = false;
-                    foreach (var campId in campIds)
-                    {
-                        if (camp.Id == campId)
-                        {
-                            isBooked = true;
-                        }
-                    }
-                    if (isBooked == false)
-                    {
-                        availableCamps.Add(camp);
-                    }
-                }
+                var result = context.Bookings
+                    .Where(s => (checkIn <= s.CheckInDate && s.CheckOutDate <= checkOut) ||
+                        (checkIn <= s.CheckInDate && s.CheckOutDate <= checkOut) || (checkIn >= s.CheckInDate && checkOut <= s.CheckOutDate))
+                    .Select(s => s.CampId).ToList();
+                return result;
             }
-            return availableCamps;
+
         }
     }
 }

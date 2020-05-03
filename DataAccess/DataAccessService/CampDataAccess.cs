@@ -17,7 +17,7 @@ namespace DataAccess.DataAccessService
             using (var context = new CampDBEntities())
             {
                 context.Camps.Add(camp);
-                
+
                 context.SaveChanges();
 
                 return camp.Id;
@@ -67,7 +67,7 @@ namespace DataAccess.DataAccessService
                 requiredCamp.Description = camp.Description;
                 try
                 {
-                    if(context.Entry(requiredCamp).State == System.Data.Entity.EntityState.Detached)
+                    if (context.Entry(requiredCamp).State == System.Data.Entity.EntityState.Detached)
                     {
                         context.Camps.Attach(requiredCamp);
                     }
@@ -77,13 +77,13 @@ namespace DataAccess.DataAccessService
                     }
                     context.Entry(requiredCamp).State = System.Data.Entity.EntityState.Modified;
                     var resultSet = context.SaveChanges();
-                    
+
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
-                
+
             }
         }
         //[Authorize(Roles = "Admin")]
@@ -91,36 +91,51 @@ namespace DataAccess.DataAccessService
         {
             using (var context = new CampDBEntities())
             {
-                
+
                 var requiredCamp = GetCamp(campId);
+                BookingDataAccess bookingDataAccess = new BookingDataAccess();
+                
                 if (requiredCamp != null)
                 {
                     try
                     {
                         if (context.Entry(requiredCamp).State == System.Data.Entity.EntityState.Detached)
                         {
+                            bookingDataAccess.removeBookingByCampId(campId);
                             context.Camps.Attach(requiredCamp);
                             context.Camps.Remove(requiredCamp);
 
                             context.SaveChanges();
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         throw ex;
                     }
-                   
+
                     return requiredCamp;
                 }
                 else
                 {
                     return null;
                 }
-                   
+
 
             }
 
-            
+           
+
+
+        }
+
+        public List<Camp> getFilteredCamps(List<Guid> bookedCamps, int capacity)
+        {
+            List<Camp> availableCamps = new List<Camp>();
+            using (var context = new CampDBEntities())
+            {
+                return context.Camps.Where(s => !bookedCamps.Contains(s.Id) && s.Capacity == capacity).ToList();
+            }
+
         }
     }
 }

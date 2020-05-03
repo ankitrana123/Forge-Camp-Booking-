@@ -22,7 +22,7 @@ namespace CampBooking.Controllers
             CampingOperations campingOperations = new CampingOperations();
             var allCamps = campingOperations.GetAllCamps().Select(camp => new CampViewModel()
             {
-
+                Id = camp.Id,
                 Image = camp.Image,
 
                 IsBooked = camp.IsBooked,
@@ -174,7 +174,7 @@ namespace CampBooking.Controllers
         }
 
         //[Authorize(Roles ="Admin")]
-        [Route("DeleteCamp")]
+        [Route("DeleteCamp/{campId}")]
         public IHttpActionResult DeleteRemoveCamp(Guid campId)
         {
             CampingOperations campingOperations = new CampingOperations();
@@ -189,37 +189,19 @@ namespace CampBooking.Controllers
         }
 
         [Route("GetCampsBetween/{checkinDate}/{checkOutDate}/{capacity}")]
-        public List<CampViewModel> GetCampsBetween(DateTime checkinDate, DateTime checkOutDate, int capacity)
+        public List<CampModel> GetCampsBetween(DateTime checkinDate, DateTime checkOutDate, int capacity)
         {
             BookingOperations bookingOperations = new BookingOperations();
             CampingOperations campingOperations = new CampingOperations();
-            var availabeCamps = bookingOperations.GetCamps(checkinDate, checkOutDate, capacity);
-
-            var requiredCamps = availabeCamps.Select(camp => new CampViewModel()
-            {
-                Image = camp.Image,
-
-                Id = camp.Id,
-
-                IsBooked = camp.IsBooked,
-
-                Title = camp.Title,
-
-                Amount = camp.Amount,
-
-                Capacity = camp.Capacity,
-
-                Description = camp.Description,
-            }).ToList();
-
-            try
-            {
-                return requiredCamps;
+            try {
+                return campingOperations.getFilteredCamps(checkinDate, checkOutDate, capacity);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw ex;
             }
+            
+            
 
         }
     }

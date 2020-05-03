@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace CampBooking
 {
@@ -24,7 +26,19 @@ namespace CampBooking
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            // using the * as a wildcard for headers and methods
+            // allowing all headers and methods from this origin
+            config.EnableCors(cors);
+
+
+
+            // Set JSON formatter as default one and remove XmlFormatter
+            var jsonFormatter = config.Formatters.JsonFormatter;
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            jsonFormatter.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+           
         }
     }
 }

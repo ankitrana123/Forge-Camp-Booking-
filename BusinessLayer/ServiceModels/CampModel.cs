@@ -26,5 +26,7 @@ namespace BusinessLayer.ServiceModels
         public bool IsBooked { get; set; }
 
         public string Title { get; set; }
+
+        public int Rating { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace BusinessLayer.ServiceOperations
 {
     public class CampingOperations
     {
+        //adds a new camp
         public Guid AddNewCamp(CampModel camp)
         {
             Camp Newcamp = new Camp()
@@ -55,11 +56,14 @@ namespace BusinessLayer.ServiceOperations
 
                 Description = camp.Description,
 
+                Rating = camp.Rating ?? default(int)
+
             }).ToList();
 
             return allCamps;
         }
 
+        //get camp details using its campid
         public Camp GetCamp(Guid campId)
         {
             CampDataAccess campDataAcces = new CampDataAccess();
@@ -88,6 +92,7 @@ namespace BusinessLayer.ServiceOperations
 
         }
 
+        //updates a camp details in db
         public void UpdateCamp(CampModel camp)
         {
             Camp newCamp = new Camp()
@@ -111,6 +116,7 @@ namespace BusinessLayer.ServiceOperations
 
         }
 
+        //deletes a camp using its campId
         public Camp DeleteCamp(Guid campId)
         {
             CampDataAccess campDataAcces = new CampDataAccess();
@@ -118,6 +124,7 @@ namespace BusinessLayer.ServiceOperations
             return isCampDeleted;
         }
 
+        //return all filtered camps between checkin and checkout and with given capacity
         public List<CampModel> getFilteredCamps(DateTime checkInDate , DateTime checkOutDate,int capacity)
         {
             BookingDataAccess bookingDataServices = new BookingDataAccess();
@@ -132,6 +139,7 @@ namespace BusinessLayer.ServiceOperations
 
         }
 
+        //Mapping from dataaccess to service layer
         private CampModel DataAccessToService(Camp requiredCamp)
         {
             var campModel = new CampModel()
@@ -151,8 +159,17 @@ namespace BusinessLayer.ServiceOperations
 
                 Description = requiredCamp.Description,
 
+                Rating = requiredCamp.Rating?? default(int)
+
             };
             return campModel;
+        }
+
+        public void GetRating(string referenceNumber, int rating)
+        {
+            BookingDataAccess bookingDataAccess = new BookingDataAccess();
+            bookingDataAccess.AddRating(referenceNumber, rating);
+           
         }
     }
 }

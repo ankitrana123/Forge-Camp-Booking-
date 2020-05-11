@@ -1,13 +1,8 @@
-﻿using CampBooking.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using BusinessLayer.ServiceModels;
+﻿using BusinessLayer.ServiceModels;
 using BusinessLayer.ServiceOperations;
-using System.Web.Security;
+using CampBooking.Models;
+using System;
+using System.Web.Http;
 
 namespace CampBooking.Controllers
 {
@@ -21,7 +16,7 @@ namespace CampBooking.Controllers
         }
 
        
-
+        
         [HttpPost]
         [Route("AccountLogin")]
         public IHttpActionResult PostLogin(AccountViewModel accountViewModel)
@@ -51,4 +46,6 @@ namespace CampBooking.Controllers
         }
 
     }
+
+    
 }

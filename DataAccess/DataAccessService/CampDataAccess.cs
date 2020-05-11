@@ -35,6 +35,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
+        //returns camp details using its id
         public Camp GetCamp(Guid campId)
         {
             using (var context = new CampDBEntities())
@@ -46,6 +47,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
+        //update the camp details in db
         public void UpdateCamp(Camp camp)
         {
             using (var context = new CampDBEntities())
@@ -86,7 +88,8 @@ namespace DataAccess.DataAccessService
 
             }
         }
-        //[Authorize(Roles = "Admin")]
+       
+        //deletes a particular camp inside db
         public Camp DeleteCamp(Guid campId)
         {
             using (var context = new CampDBEntities())
@@ -128,11 +131,16 @@ namespace DataAccess.DataAccessService
 
         }
 
+        //get all filterd camps between checkIn and Checkout date
         public List<Camp> getFilteredCamps(List<Guid> bookedCamps, int capacity)
         {
             List<Camp> availableCamps = new List<Camp>();
             using (var context = new CampDBEntities())
             {
+                if (capacity == 0)
+                {
+                    return context.Camps.Where(s => !bookedCamps.Contains(s.Id)).ToList();
+                }
                 return context.Camps.Where(s => !bookedCamps.Contains(s.Id) && s.Capacity == capacity).ToList();
             }
 

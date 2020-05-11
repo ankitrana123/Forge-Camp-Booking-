@@ -24,5 +24,7 @@ namespace CampBooking.Models
         public bool IsBooked { get; set; }
 
         public string Title { get; set; }
+
+        public int Rating { get; set; }
     }
 }

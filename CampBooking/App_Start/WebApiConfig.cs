@@ -26,10 +26,10 @@ namespace CampBooking
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+            //EnableCorsAttribute cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
             // using the * as a wildcard for headers and methods
             // allowing all headers and methods from this origin
-            config.EnableCors(cors);
+            //config.EnableCors(cors);
 
 
 

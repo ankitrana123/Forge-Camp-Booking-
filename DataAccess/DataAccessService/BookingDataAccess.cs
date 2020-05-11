@@ -9,6 +9,7 @@ namespace DataAccess.DataAccessService
 {
     public class BookingDataAccess
     {
+        //generates a random 8 digit alpha numeric code 
         public string random()
         {
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -22,12 +23,11 @@ namespace DataAccess.DataAccessService
             return finalString;
         }
 
-        //generate booking ref no.
+        //returns the random booking ref. number for the created camp
         public string CreateBooking(Booking booking)
         {
             using (var context = new CampDBEntities())
             {
-                //booking.UserId = GetUserId(email);
                 booking.ReferenceNumber = random();
 
                 bool IsBooked = (from c in context.Camps
@@ -36,10 +36,7 @@ namespace DataAccess.DataAccessService
                 IsBooked = true;
 
                 context.Bookings.Add(booking);
-
-
-
-
+                
                 try
                 {
                     context.SaveChanges();
@@ -50,6 +47,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
+        //return userId using its email
         private Guid GetUserId(string email)
         {
             using (var context = new CampDBEntities())
@@ -73,6 +71,7 @@ namespace DataAccess.DataAccessService
 
         }
 
+        //fetches the booking for a user using its userId
         public Booking fetchBookingForUser(Guid userId)
         {
             using (var context = new CampDBEntities())
@@ -110,6 +109,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
+        //removes a booking using its campId
         public void removeBookingByCampId(Guid campId)
         {
             using(var context = new CampDBEntities())
@@ -123,8 +123,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
-       
-
+       //list of available camps between checkIn and checkOut date
         public List<Guid> campsBetween(DateTime checkIn, DateTime checkOut)
         {
             using (var context = new CampDBEntities())
@@ -136,6 +135,54 @@ namespace DataAccess.DataAccessService
                 return result;
             }
 
+        }
+
+        /// <summary>
+        /// 1. Assign the rating to the booked camp with given reference number
+        /// 2. Find average of all the non zero ratings for that camp to display on dashboard
+        /// </summary>
+        /// <param name="referenceNumber"></param> booking reference number for that camp
+        /// <param name="rating"></param> Rating is take as a nullable parameter here
+        public void AddRating(string referenceNumber, int rating)
+        {
+
+            using (var context = new CampDBEntities())
+            {
+                var requiredBooking = context.Bookings.FirstOrDefault(s => s.ReferenceNumber == referenceNumber);
+
+                requiredBooking.Rating = rating;
+               
+
+                context.Entry(requiredBooking).State = System.Data.Entity.EntityState.Modified;
+
+                context.SaveChanges();
+                int?[] ratings = context.Bookings.Where(s => s.Rating != 0 && s.CampId == requiredBooking.CampId).Select(s => s.Rating).ToArray();
+                
+
+                List<int> ratings2 = new List<int>();
+                foreach (var item in ratings)
+                {
+                    if (item.HasValue)
+                    {
+                        ratings2.Add(item ?? default(int));   // add only if it has a non-null value
+                    }
+                }
+
+                int roundedRating = (int)Math.Round(ratings2.Average(), MidpointRounding.AwayFromZero);
+
+                var requiredCamp = context.Camps.First(s => s.Id == requiredBooking.CampId);
+
+                requiredCamp.Rating = roundedRating;
+                //assign rating to the required camp
+
+                context.Entry(requiredCamp).State = System.Data.Entity.EntityState.Modified;
+
+
+                context.SaveChanges();
+
+
+            }
+               
         }
     }
 }

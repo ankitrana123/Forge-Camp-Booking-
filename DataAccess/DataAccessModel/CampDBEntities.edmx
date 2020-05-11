@@ -21,6 +21,7 @@
           <Property Name="CampId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Capacity" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="Camp">
           <Key>
@@ -33,6 +34,7 @@
           <Property Name="IsBooked" Type="bit" Nullable="false" />
           <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Rating" Type="int" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -101,6 +103,7 @@
           <Property Name="CampId" Type="Guid" Nullable="false" />
           <Property Name="UserId" Type="Guid" Nullable="false" />
           <Property Name="Capacity" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Int32" />
           <NavigationProperty Name="Camp" Relationship="Self.FK_Booking_Camp" FromRole="Booking" ToRole="Camp" />
           <NavigationProperty Name="User" Relationship="Self.FK_Booking_User" FromRole="Booking" ToRole="User" />
         </EntityType>
@@ -115,6 +118,7 @@
           <Property Name="IsBooked" Type="Boolean" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" />
           <NavigationProperty Name="Bookings" Relationship="Self.FK_Booking_Camp" FromRole="Camp" ToRole="Booking" />
         </EntityType>
         <EntityType Name="User">
@@ -185,6 +189,7 @@
                 <ScalarProperty Name="CampId" ColumnName="CampId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -198,6 +203,7 @@
                 <ScalarProperty Name="IsBooked" ColumnName="IsBooked" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

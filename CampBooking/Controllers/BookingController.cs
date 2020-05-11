@@ -15,16 +15,16 @@ namespace CampBooking.Controllers
     public class BookingController : ApiController
     {
 
-        //[Authorize(Roles = "User")]
+        /// <summary>
+        /// Creates a new booking the given camp
+        /// </summary>
+        /// <param name="book">details of the booking to be created</param>
+        /// <returns>randomly generated 8 digit booking ref. number</returns>
         [HttpPost]
         [Route("CreateBooking")]
         public string PostCreateBooking(BookingViewModel book)
         {
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
             try
             {
                 BookingOperations bookingOperations = new BookingOperations();
@@ -44,7 +44,6 @@ namespace CampBooking.Controllers
 
                     TotalNights = book.TotalNights,
 
-                    //ReferenceNumber = book.ReferenceNumber,
 
                     State = book.State,
 
@@ -67,7 +66,10 @@ namespace CampBooking.Controllers
             
         }
 
-        //[Authorize(Roles = "User")]
+        /// <summary>
+        /// returns details of a booking using its reference number
+        /// </summary>
+        
         [HttpGet]
         [Route("GetBookingDetails/{bookingReferenceNumber}")]
         public BookingViewModel GetBookingDetails(string bookingReferenceNumber)
@@ -110,7 +112,10 @@ namespace CampBooking.Controllers
             }
         }
 
-        //[Authorize(Roles = "User")]
+        /// <summary>
+        /// Deletes a booking using its booking reference number
+        /// </summary>
+        
         [HttpDelete]
         [Route("CancelBooking/{bookingReferenceNumber}")]
         public IHttpActionResult DeleteCancelBooking(string bookingReferenceNumber)
@@ -139,6 +144,7 @@ namespace CampBooking.Controllers
             return Ok();
         }
 
+       
         
 
        

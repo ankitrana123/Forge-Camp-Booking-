@@ -25,14 +25,20 @@ namespace BusinessLayer.ServiceOperations
 
         }
 
-
-
-        public string[] GetRolesOfUser(string Email)
+        //check if the given user is authenticated or not
+        public bool IsUserValid(string userName, string password)
         {
             AccountDataAccess accountDataAccess = new AccountDataAccess();
-            return accountDataAccess.GetUserRoles(Email);
+            return accountDataAccess.ValidateUser(userName,password);
         }
 
+        //get the user information such as userName and password
+        public UserInfo GetUserInfo()
+        {
+            AccountDataAccess accountDataAccess = new AccountDataAccess();
+            return  accountDataAccess.GetUserInfo();
+            
+        }
 
     }
 }

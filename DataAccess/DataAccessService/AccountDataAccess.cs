@@ -7,8 +7,16 @@ using DataAccess.DataAccessModel;
 
 namespace DataAccess.DataAccessService
 {
+    //dummy class contains userName and password
+    public class UserInfo
+    {
+        public string UserName { get; set; }
+        public string Password { get; set; }
+    }
+
     public class AccountDataAccess
     {
+        //return true if the user's info is correct
         public bool Login(User userEntity)
         {
             using (var context = new CampDBEntities())
@@ -21,6 +29,7 @@ namespace DataAccess.DataAccessService
             }
         }
 
+        //check db if the given user exits in the database or not
         public bool UserExists(User userEntity)
         {
             using (var context = new CampDBEntities())
@@ -32,33 +41,36 @@ namespace DataAccess.DataAccessService
             }
         }
 
-        public Guid SignUp(User userEntity)
+        //checks if given user is valid or not
+        public bool ValidateUser(string userName, string password)
         {
+
             using (var context = new CampDBEntities())
             {
-                context.Users.Add(userEntity);
-                
-                context.SaveChanges();
-                return userEntity.Id;
+                bool isValidUser = context.Users.Any(User => User.Email.ToLower() ==
+                userName.ToLower() && User.Password == password);
+
+                return isValidUser;
             }
         }
 
-        public string[] GetUserRoles(string email)
+       
+        //get userId and password for a user
+        public UserInfo GetUserInfo()
         {
-            List<String> Roles = new List<string>();
-            using (var context = new CampDBEntities())
+            using(var context = new CampDBEntities())
             {
-                var result = context.Users.Where(s => s.Email == email).Select(s => s.IsAdmin).FirstOrDefault();
-                if(result)
-                {
-                    Roles.Add("Admin");
-                }
-                else
-                {
-                    Roles.Add("User");
-                }
+                var userName = context.Users.Select(s => s.Email).FirstOrDefault();
+                var password = context.Users.Select(s => s.Password).FirstOrDefault();
+
+                UserInfo userInfo = new UserInfo();
+                userInfo.UserName = userName;
+                userInfo.Password = password;
+
+                return userInfo;
             }
-            return Roles.ToArray();
         }
+
+       
     }
 }

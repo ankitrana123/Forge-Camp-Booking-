@@ -26,6 +26,7 @@ namespace DataAccess.DataAccessModel
         public System.Guid CampId { get; set; }
         public System.Guid UserId { get; set; }
         public int Capacity { get; set; }
+        public Nullable<int> Rating { get; set; }
     
         public virtual Camp Camp { get; set; }
         public virtual User User { get; set; }

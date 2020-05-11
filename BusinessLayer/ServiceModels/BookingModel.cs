@@ -31,5 +31,7 @@ namespace BusinessLayer.ServiceModels
         public System.Guid CampId { get; set; }
 
         public System.Guid UserId { get; set; }
+
+        public int Rating { get; set; }
     }
 }
